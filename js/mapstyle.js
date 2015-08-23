@@ -50,6 +50,8 @@ var message;
                 title: ' 駅'
               };
               var markerEkikoko = new google.maps.Marker(markerOptions);
+              google.maps.event.addListener(markerEkikoko, 'click', function(e){ clickEventFunc(e, o); } );
+              //google.maps.event.addListener(markerEkikoko, 'click', clickEventFunc );
           });
       }).fail(function(data){ //ajaxの通信に失敗した場合
         alert("error!");
@@ -114,7 +116,7 @@ var message;
       map.mapTypes.set('sample', sampleType);
       map.setMapTypeId('sample');
 
-      google.maps.event.addListener(marker, 'click', function(event){clickEventFunc(event , pos_array);});
+      
     }
 
   function errorCallback(error) {
@@ -122,8 +124,10 @@ var message;
    document.getElementById("map_canvas").innerHTML = message;
   }
 
-function clickEventFunc(event , pos_array) {
-      alert(event.latLng.toString());
+function clickEventFunc(event , station) {
+      console.log(station);
+      //alert(event.latLng.toString());
+      $.colorbox({html:"<ul><li>"+"駅名："+station.name+"</li><li>"+"路線："+station.line+"</li><li>"+"距離："+station.distance+"</li>"+"</ul>"});
     }
 
 function plotMarker(markers){
