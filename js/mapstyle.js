@@ -1,3 +1,12 @@
+$(document).ready(function () {
+  hsize = $(window).height();
+    $("#map_canvas").css("height", hsize -33 + "px");
+});
+$(window).resize(function () {
+  hsize = $(window).height();
+  $("#map_canvas").css("height", hsize  -33 + "px");
+});
+
 
 var map; // マップ
 var message;
@@ -5,7 +14,7 @@ var message;
   // 位置情報を取得します。
   function getLocation(){
     document.getElementById("map_canvas")
-    .innerHTML = '<img src="img/gif-load.gif" alt="">';
+    .innerHTML = '<img src="img/gif-load.gif" alt="検索中" class="load-img">';
       if (navigator.geolocation) {
           // 現在の位置情報取得を実施 正常に位置情報が取得できると、
           // successCallbackでコールバック。
@@ -37,6 +46,7 @@ var message;
         }).done(function(data){ //ajaxの通信に成功した場合
           console.log(data);
           pos_array = data.response.station;
+          //google.maps.event.addListener(markerImakoko, 'click', function(e){ console.log(e); } );
         // var stationPos = new google.maps.LatLng(this.x, this.y); /*駅*/
         $.each(data.response.station, 
           function(i,o){
@@ -130,21 +140,5 @@ function clickEventFunc(event , station) {
       $.colorbox({html:"<ul><li>"+"駅名："+station.name+"</li><li>"+"路線："+station.line+"</li><li>"+"距離："+station.distance+"</li>"+"</ul>"});
     }
 
-function plotMarker(markers){
-    for(var idx=0; idx < marker.length; idx++){
-        marker.setMap(map);
-        onMarkerClick(marker, idx);
-    }
-}
-
-function onMarkerClick(marker, idx){
-    google.maps.event.addListener(
-        marker
-    ,   'click'
-    ,   function(event){
-            alert(idx);
-        }
-    );
-}
 
 
